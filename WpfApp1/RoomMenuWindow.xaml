@@ -1,0 +1,137 @@
+﻿<Window x:Class="BlockBlast.RoomMenuWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Room Menu"
+        WindowStartupLocation="CenterScreen"
+        Background="#FF1E1E1E"
+        WindowState="Maximized"
+        WindowStyle="None"
+        ResizeMode="NoResize">
+    <Window.Resources>
+        <!-- 🔽 ВСТАВЬ ВОТ ЭТО -->
+        <Style x:Key="FancyButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="#FF3C8DBC" />
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" CornerRadius="20">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Trigger.EnterActions>
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <ColorAnimation Storyboard.TargetProperty="(Button.Background).(SolidColorBrush.Color)"
+                                                To="#FF5CAEE6" Duration="0:0:0.5" AutoReverse="True" RepeatBehavior="Forever" />
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </Trigger.EnterActions>
+                    <Trigger.ExitActions>
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <ColorAnimation Storyboard.TargetProperty="(Button.Background).(SolidColorBrush.Color)"
+                                                To="#FF3C8DBC" Duration="0:0:0.5" />
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </Trigger.ExitActions>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <Storyboard x:Key="TextAnimation">
+            <ColorAnimation Storyboard.TargetName="TextGradient"
+                            Storyboard.TargetProperty="GradientStops[0].Color"
+                            From="White" To="Red" Duration="0:0:5" AutoReverse="True" RepeatBehavior="Forever" />
+            <ColorAnimation Storyboard.TargetName="TextGradient"
+                            Storyboard.TargetProperty="GradientStops[1].Color"
+                            From="Blue" To="Green" Duration="0:0:5" AutoReverse="True" RepeatBehavior="Forever" />
+            <ColorAnimation Storyboard.TargetName="TextGradient"
+                            Storyboard.TargetProperty="GradientStops[2].Color"
+                            From="White" To="Yellow" Duration="0:0:5" AutoReverse="True" RepeatBehavior="Forever" />
+        </Storyboard>
+    </Window.Resources>
+
+    <Grid>
+        <Canvas Name="BackgroundCanvas" />
+
+        <StackPanel Name="MainPanel"
+                    VerticalAlignment="Center"
+                    HorizontalAlignment="Center"
+                    Opacity="0"
+                    Margin="0,-250,0,0">
+            <!-- Подняли всю панель выше -->
+            <TextBlock Text="BLOCK BLAST"
+                       FontSize="100"
+                       FontWeight="Black"
+                       HorizontalAlignment="Center"
+                       Margin="0,0,0,120"> <!-- Увеличенный отступ вниз -->
+                <TextBlock.Foreground>
+                    <LinearGradientBrush x:Name="TextGradient" StartPoint="0,0" EndPoint="1,0">
+                        <GradientStop Color="White" Offset="0.0" />
+                        <GradientStop Color="Blue" Offset="0.5" />
+                        <GradientStop Color="White" Offset="1.0" />
+                    </LinearGradientBrush>
+                </TextBlock.Foreground>
+            </TextBlock>
+
+            <Button Content="Создать комнату"
+                    Width="350" Height="80" FontSize="28"
+                    Click="CreateRoom_Click"
+                    Style="{StaticResource FancyButtonStyle}"
+                    Margin="0,0,0,25" />
+
+            <Button Content="Подключиться к комнате"
+                    Width="350" Height="80" FontSize="26"
+                    Click="JoinRoom_Click"
+                    Style="{StaticResource FancyButtonStyle}" />
+
+            <Button Content="Выйти из игры"
+        Width="350" Height="70" FontSize="24"
+        Click="ExitGame_Click"
+        Margin="0,30,0,0">
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <Setter Property="Background" Value="DarkRed"/>
+                        <Setter Property="Foreground" Value="White"/>
+                        <Setter Property="BorderBrush" Value="Red"/>
+                        <Setter Property="BorderThickness" Value="2"/>
+                        <Setter Property="Cursor" Value="Hand"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="Button">
+                                    <Border x:Name="border"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="10">
+                                        <ContentPresenter HorizontalAlignment="Center"
+                                              VerticalAlignment="Center"
+                                              RecognizesAccessKey="True"/>
+                                    </Border>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter TargetName="border" Property="Background" Value="#B22222"/>
+                                            <!-- более светлый красный -->
+                                            <Setter TargetName="border" Property="BorderBrush" Value="#FF5555"/>
+                                        </Trigger>
+                                        <Trigger Property="IsPressed" Value="True">
+                                            <Setter TargetName="border" Property="Background" Value="#8B0000"/>
+                                            <!-- темный красный -->
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </Button.Style>
+            </Button>
+
+
+        </StackPanel>
+    </Grid>
+</Window>
